@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require("path")
 const cors = require('cors');
+const e = require('express');
 const app = express() ;
 require('dotenv').config()
 app.use(cors());
@@ -34,7 +35,26 @@ app.get("/getbook/itemNumber",async(req,res)=>{
     res.json(result)
 })
 
-app.put("/updatebook/stock",(req,res)=>{
+app.put("/updatebook/stock",async(req,res)=>{
+ 
+        let opration = req.headers["opration"]
+        let amount = req.headers["amount"]
+        let itemNumber = req.headers["itemnumber"]
+        console.log(opration,amount,itemNumber)
+        let result = await knex("items").select().where("number",itemNumber)
+        let newVal 
+        if(opration == "increase")
+        {
+            newVal = parseInt(result[0]["stock"]) + parseInt(amount)
+        }
+        else
+        {
+            newVal = parseInt(result[0]["stock"]) - parseInt(amount)
+        }
+        let updateResult = await knex('items').update('stock',newVal).where("number",itemNumber)
+        res.sendStatus(200) 
+ 
+
 
 })
 

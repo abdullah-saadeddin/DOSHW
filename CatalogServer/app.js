@@ -26,8 +26,12 @@ app.get("/getbook/subject",async(req,res)=>{
     res.json(result)
 })
 
-app.get("/getbook/itemNumber",(req,res)=>{
+app.get("/getbook/itemNumber",async(req,res)=>{
 
+    let itemNumber = req.headers["itemnumber"]
+    console.log(itemNumber)
+    let result = await knex("items").select().where("number",itemNumber)
+    res.json(result)
 })
 
 app.put("/updatebook/stock",(req,res)=>{

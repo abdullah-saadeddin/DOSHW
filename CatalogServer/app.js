@@ -7,7 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 const knex = require("knex")({
-    client: "mysql",
+    client: "sqlite",
     connection: {
         filename: path.join(__dirname, './items.db')
     },
@@ -18,8 +18,12 @@ app.get("/",(req,res)=>{
     res.sendStatus(200)
 })
 
-app.get("/getbook/subject",(req,res)=>{
+app.get("/getbook/subject",async(req,res)=>{
 
+    let subject = req.headers["subject"]
+    console.log(subject)
+    let result = await knex("items").select().where("topic",subject)
+    res.json(result)
 })
 
 app.get("/getbook/itemNumber",(req,res)=>{

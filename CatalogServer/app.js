@@ -10,6 +10,21 @@ app.get("/",(req,res)=>{
     res.sendStatus(200)
 })
 
+app.get("/getbook/subject",(req,res)=>{
+
+})
+
+app.get("/getbook/itemNumber",(req,res)=>{
+
+})
+
+app.put("/updatebook/stock",(req,res)=>{
+
+})
+
+app.put("/updatebook/cost",(req,res)=>{
+
+})
 
 app.listen(process.env.PORT, ()=>{
     console.log(`server is running on port ${process.env.PORT}`);

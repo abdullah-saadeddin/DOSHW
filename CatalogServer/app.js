@@ -54,12 +54,14 @@ app.put("/updatebook/stock",async(req,res)=>{
         let updateResult = await knex('items').update('stock',newVal).where("number",itemNumber)
         res.sendStatus(200) 
  
-
-
 })
 
-app.put("/updatebook/cost",(req,res)=>{
-
+app.put("/updatebook/cost",async(req,res)=>{
+    
+    let newcost = parseInt(req.headers["newcost"])
+    let itemNumber = req.headers["itemnumber"]  
+    let updateResult = await knex('items').update('cost',newcost).where("number",itemNumber)
+    res.sendStatus(200) 
 })
 
 app.listen(process.env.PORT, ()=>{

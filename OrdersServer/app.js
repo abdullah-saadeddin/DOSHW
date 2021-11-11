@@ -22,11 +22,14 @@ app.post("/purchase/:itemnumber",async(req,res)=>{
     let itemNumber = req.params.itemnumber
     let data = []
     axios.get(process.env.HOST+'/getbook/itemNumber',{headers:{"itemnumber":itemNumber}})
-        .then((res)=> {
-            let itemData = res.data
+        .then((ress)=> {
+            let itemData = ress.data
             if(itemData != {})
             {
                 axios.put(process.env.HOST+'/updatebook/stock',data,{headers:{"opration":"decrease","itemnumber":itemNumber,"amount":1}})
+                .then(resp=>{
+                    res.sendStatus(200)
+                })
             }
         })
         .catch( (error) =>{

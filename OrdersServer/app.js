@@ -9,7 +9,7 @@ app.use(express.json());
 const knex = require("knex")({
     client: "sqlite",
     connection: {
-        filename: path.join(__dirname, './items.db')
+        filename: path.join(__dirname, './orders.db')
     },
     useNullAsDefault: true
 });
@@ -28,6 +28,7 @@ app.post("/purchase/:itemnumber",async(req,res)=>{
             {
                 axios.put(process.env.HOST+'/updatebook/stock',data,{headers:{"opration":"decrease","itemnumber":itemNumber,"amount":1}})
                 .then(resp=>{
+                    let result = await knex("orders").insert({"date":new Date(),"itemNumber":itemNumber})
                     res.sendStatus(200)
                 })
             }

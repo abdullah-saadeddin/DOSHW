@@ -27,7 +27,7 @@ app.post("/purchase/:itemnumber",async(req,res)=>{
             if(itemData != {})
             {
                 axios.put(process.env.HOST+'/updatebook/stock',data,{headers:{"opration":"decrease","itemnumber":itemNumber,"amount":1}})
-                .then(resp=>{
+                .then(async(resp)=>{
                     let result = await knex("orders").insert({"date":new Date(),"itemNumber":itemNumber})
                     res.sendStatus(200)
                 })

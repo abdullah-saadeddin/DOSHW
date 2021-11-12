@@ -13,11 +13,27 @@ app.get("/",(req,res)=>{
 
 
 app.get("/search",(req,res)=>{
-
+    let subject = req.headers["topic"]
+    axios.get(process.env.Catalog_HOST+'/getbook/subject',{headers:{subject}})
+        .then((ress)=> {
+           res.send(ress.data)
+        })
+        .catch( (error) =>{
+            res.sendStatus(500)
+            console.log(error);
+        })
 })
 
 app.get("/info",(req,res)=>{
-    res.sendStatus(200)
+    let itemnumber = req.headers["itemnumber"]
+    axios.get(process.env.Catalog_HOST+'/getbook/itemNumber',{headers:{itemnumber}})
+        .then((ress)=> {
+           res.send(ress.data[0])
+        })
+        .catch( (error) =>{
+            res.sendStatus(500)
+            console.log(error);
+        })
 })
 
 app.post("/purchase/:itemnumber",async(req,res)=>{

@@ -11,7 +11,7 @@ let orCur = 0
 require('dotenv').config()
 app.use(cors());
 app.use(express.json());
-const l = require("../looger.js")
+const l = require("./looger.js")
 
 const collection = new Map();
 let cashMid = (req, res, next)=>{

@@ -13,7 +13,7 @@ const knex = require("knex")({
     },
     useNullAsDefault: true
 });
-const l = require("../looger")
+const l = require("./looger")
 
 const otherIP = "http://192.168.139.133:"
 const myIP = "http://192.168.139.131:"

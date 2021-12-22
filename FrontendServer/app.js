@@ -3,9 +3,9 @@ const path = require("path")
 const cors = require('cors');
 const app = express() ;
 const axios = require("axios");
-let catlogIP = ["http://192.168.139.133:3003","http://192.168.139.131:3003"]
-let orderIP = ["http://192.168.139.133:3005","http://192.168.139.131:3005"]
-
+let catlogIP = ["https://" + process.env.catIP+":3003","https://" +process.env.orIP+":3003"]
+let orderIP = ["https://" + process.env.catIP+":3005","https://" +process.env.orIP+":3005"]
+console.log(catlogIP)
 let catCur = 0
 let orCur = 0
 require('dotenv').config()

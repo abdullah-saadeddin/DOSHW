@@ -5,6 +5,7 @@ const app = express() ;
 const axios = require("axios");
 let catlogIP = ["http://192.168.139.133:3003","http://192.168.139.131:3003"]
 let orderIP = ["http://192.168.139.133:3005","http://192.168.139.131:3005"]
+
 let catCur = 0
 let orCur = 0
 require('dotenv').config()
@@ -53,6 +54,7 @@ app.get("/search",cashMid,(req,res)=>{
             res.sendStatus(500)
             l.error("there is an error accour in the server")
             l.error(error.stack)  
+            res.status(500).send("error parsing your req. in server")
         })
 })
 
@@ -68,9 +70,10 @@ app.get("/info",cashMid,(req,res)=>{
            res.send(ress.data[0])
         })
         .catch( (error) =>{
-            res.sendStatus(500)
+            
             l.error("there is an error accour in the server")
-            l.error(error.stack)  
+            l.error(error.stack) 
+            res.status(500).send("error parsing your req. in server")
         })
 })
 
@@ -85,11 +88,12 @@ app.post("/purchase/:itemnumber",async(req,res)=>{
             collection.clear()
             orCur = (orCur + 1) % orderIP.length;
             l.log("the item get paod succsfuly")
-           res.sendStatus(ress.data)
+           res.send(ress.data)
         })
         .catch( (error) =>{
             l.error("there is an error accour in the server")
             l.error(error.stack)  
+            res.status(500).send("error parsing your req. in server")
         })
 })
 app.listen(process.env.PORT, ()=>{

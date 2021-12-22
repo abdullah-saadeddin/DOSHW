@@ -27,8 +27,16 @@ app.post("/purchase/:itemnumber",async(req,res)=>{
         .then((ress)=> {
             l.log("item data is: " + JSON.stringify(ress.data))
             let itemData = ress.data
+            if(ress.data.result)
+            {
+                res.json({"result":"there is no book with this item number"})
+            }
             if(itemData != {})
             {
+                if(ress.data.stock - 1 > 0)
+                {
+                    res.send("there is no items in the stock")
+                }
                 axios.put(process.env.HOST+'/updatebook/stock',data,{headers:{"opration":"decrease","itemnumber":itemNumber,"amount":1}})
                 .then(async(resp)=>{
                     l.log("update the stock of the item")
@@ -44,5 +52,5 @@ app.post("/purchase/:itemnumber",async(req,res)=>{
 })
 
 app.listen(process.env.PORT, ()=>{
-    console.log(`server is running on port ${process.env.PORT}`);
+    l.log(`server is running on port ${process.env.PORT}`);
   });

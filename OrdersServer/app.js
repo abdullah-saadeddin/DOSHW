@@ -33,17 +33,21 @@ app.post("/purchase/:itemnumber",async(req,res)=>{
             }
             if(itemData != {})
             {
-                if(ress.data.stock - 1 > 0)
+                if(itemData.stock - 1 < 0)
                 {
                     res.send("there is no items in the stock")
                 }
-                axios.put(process.env.HOST+'/updatebook/stock',data,{headers:{"opration":"decrease","itemnumber":itemNumber,"amount":1}})
-                .then(async(resp)=>{
-                    l.log("update the stock of the item")
-                    let result = await knex("orders").insert({"date":new Date(),"itemNumber":itemNumber})
-                    l.log("result of update: " + resp.data)
-                    res.sendStatus(200)
-                })
+                else
+                {
+                    axios.put(process.env.HOST+'/updatebook/stock',data,{headers:{"opration":"decrease","itemnumber":itemNumber,"amount":1}})
+                    .then(async(resp)=>{
+                        l.log("update the stock of the item")
+                        let result = await knex("orders").insert({"date":new Date(),"itemNumber":itemNumber})
+                        l.log("result of update: " + resp.data)
+                        res.sendStatus(200)
+                    })
+                }
+            
             }
         })
         .catch( (error) =>{

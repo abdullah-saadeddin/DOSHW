@@ -64,10 +64,14 @@ app.get("/info",cashMid,(req,res)=>{
     l.log("Serch in server :" + catlogIP[catCur] )
     axios.get(catlogIP[catCur]+'/getbook/itemNumber',{headers:{itemnumber}})
         .then((ress)=> {
-            l.log(JSON.stringify(ress))
+            
             collection.set(req.headers["itemnumber"] + req.url,ress.data[0])
             catCur = (catCur + 1) % catlogIP.length;
             l.log("the book is: ",JSON.stringify(ress.data[0]) )
+            if(!ress.data[0])
+            {
+                res.send(ress.data)
+            }
            res.send(ress.data[0])
         })
         .catch( (error) =>{

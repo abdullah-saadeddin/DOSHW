@@ -33,7 +33,9 @@ app.post("/purchase/:itemnumber",async(req,res)=>{
             }
             if(itemData != {})
             {
-                if(itemData.stock - 1 < 0)
+                l.log(parseInt(itemData.stock) - 1)
+                l.log(parseInt(itemData.stock) )
+                if(parseInt(itemData.stock) - 1 < 0)
                 {
                     res.send("there is no items in the stock")
                 }

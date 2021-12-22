@@ -64,6 +64,7 @@ app.get("/info",cashMid,(req,res)=>{
     l.log("Serch in server :" + catlogIP[catCur] )
     axios.get(catlogIP[catCur]+'/getbook/itemNumber',{headers:{itemnumber}})
         .then((ress)=> {
+            l.log(JSON.stringify(ress))
             collection.set(req.headers["itemnumber"] + req.url,ress.data[0])
             catCur = (catCur + 1) % catlogIP.length;
             l.log("the book is: ",JSON.stringify(ress.data[0]) )
@@ -73,7 +74,7 @@ app.get("/info",cashMid,(req,res)=>{
             
             l.error("there is an error accour in the server")
             l.error(error.stack) 
-            res.status(500).send("error parsing your req. in server")
+            
         })
 })
 

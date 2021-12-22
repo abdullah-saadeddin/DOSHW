@@ -45,7 +45,7 @@ app.get("/getbook/itemNumber",async(req,res)=>{
     try
     {
         let itemNumber = req.headers["itemnumber"]
-        l.log("serach for the book with item number: " + itemnumber )
+        l.log("serach for the book with item number: " + itemNumber )
         console.log(itemNumber)
         let result = await knex("items").select().where("number",itemNumber)
         if(result.length == 0)

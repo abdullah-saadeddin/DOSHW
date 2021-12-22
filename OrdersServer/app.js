@@ -15,7 +15,7 @@ const knex = require("knex")({
 });
 const l = require("../looger")
 
-const otherIP = ""
+const otherIP = "http://192.168.139.133:"
 
 app.get("/",(req,res)=>{
     res.sendStatus(200)
@@ -29,10 +29,10 @@ app.post("/purchase/:itemnumber",async(req,res)=>{
     l.log("new order to buy item: " + itemNumber)
     if(!req.headers.from)
     {
-        axios.post(otherIP+"/purchase/"+itemNumber,d,{headers:{"from":1}}).then().catch()
+        axios.post(otherIP+"3005"+"/purchase/"+itemNumber,d,{headers:{"from":1}}).then().catch()
     }
     
-    axios.get(process.env.HOST+'/getbook/itemNumber',{headers:{"itemnumber":itemNumber}})
+    axios.get(otherIP+"3003"+'/getbook/itemNumber',{headers:{"itemnumber":itemNumber}})
         .then((ress)=> {
             l.log("item data is: " + JSON.stringify(ress.data))
             let itemData = ress.data
@@ -50,7 +50,7 @@ app.post("/purchase/:itemnumber",async(req,res)=>{
                 }
                 else
                 {
-                    axios.put(process.env.HOST+'/updatebook/stock',data,{headers:{"opration":"decrease","itemnumber":itemNumber,"amount":1}})
+                    axios.put(otherIP+"3003"+'/updatebook/stock',data,{headers:{"opration":"decrease","itemnumber":itemNumber,"amount":1}})
                     .then(async(resp)=>{
                         l.log("update the stock of the item")
                         let result = await knex("orders").insert({"date":new Date(),"itemNumber":itemNumber})

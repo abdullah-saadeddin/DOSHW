@@ -13,6 +13,7 @@ const knex = require("knex")({
     },
     useNullAsDefault: true
 });
+const l = require("../looger")
 
 app.get("/",(req,res)=>{
     res.sendStatus(200)
@@ -21,20 +22,24 @@ app.get("/",(req,res)=>{
 app.post("/purchase/:itemnumber",async(req,res)=>{
     let itemNumber = req.params.itemnumber
     let data = []
+    l.log("new order to buy item: " + itemNumber)
     axios.get(process.env.HOST+'/getbook/itemNumber',{headers:{"itemnumber":itemNumber}})
         .then((ress)=> {
+            l.log("item data is: " + JSON.stringify(ress.data))
             let itemData = ress.data
             if(itemData != {})
             {
                 axios.put(process.env.HOST+'/updatebook/stock',data,{headers:{"opration":"decrease","itemnumber":itemNumber,"amount":1}})
                 .then(async(resp)=>{
+                    l.log("update the stock of the item")
                     let result = await knex("orders").insert({"date":new Date(),"itemNumber":itemNumber})
+                    l.log("result of update: " + resp.data)
                     res.sendStatus(200)
                 })
             }
         })
         .catch( (error) =>{
-            console.log(error);
+            l.error("error in finding the item")
         })
 })
 

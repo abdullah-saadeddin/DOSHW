@@ -15,17 +15,23 @@ const knex = require("knex")({
 });
 const l = require("../looger")
 
-const otherIP
+const otherIP = ""
 
 app.get("/",(req,res)=>{
     res.sendStatus(200)
 })
 
 app.post("/purchase/:itemnumber",async(req,res)=>{
+
     let itemNumber = req.params.itemnumber
     let data = []
+    let d = {}
     l.log("new order to buy item: " + itemNumber)
-    axios.post(otherIP+"/purchase/"+itemNumber).then().catch()
+    if(!req.headers.from)
+    {
+        axios.post(otherIP+"/purchase/"+itemNumber,d,{headers:{"from":1}}).then().catch()
+    }
+    
     axios.get(process.env.HOST+'/getbook/itemNumber',{headers:{"itemnumber":itemNumber}})
         .then((ress)=> {
             l.log("item data is: " + JSON.stringify(ress.data))

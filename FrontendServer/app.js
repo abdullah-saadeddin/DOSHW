@@ -3,8 +3,8 @@ const path = require("path")
 const cors = require('cors');
 const app = express() ;
 const axios = require("axios");
-let catlogIP = ["https://" + process.env.catIP+":3003","https://" +process.env.orIP+":3003"]
-let orderIP = ["https://" + process.env.catIP+":3005","https://" +process.env.orIP+":3005"]
+let catlogIP = ["http://" + process.env.catIP+":3003","http://" +process.env.orIP+":3003"]
+let orderIP = ["http://" + process.env.catIP+":3005","http://" +process.env.orIP+":3005"]
 console.log(catlogIP)
 let catCur = 0
 let orCur = 0

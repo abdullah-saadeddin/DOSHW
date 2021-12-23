@@ -15,8 +15,8 @@ const knex = require("knex")({
 });
 const l = require("./looger")
 
-const otherIP = "http://192.168.139.133:"
-const myIP = "http://192.168.139.131:"
+const otherIP = "http://" + process.env.repIP +":"
+const myIP = "http://" + process.env.myIP +":"
 app.get("/",(req,res)=>{
     res.sendStatus(200)
 })

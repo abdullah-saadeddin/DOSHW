@@ -7,7 +7,7 @@ require('dotenv').config()
 app.use(cors());
 app.use(express.json());
 const l = require("./looger")
-const axios = require("axios")
+const axios = require("-axios")
 const knex = require("knex")({
     client: "sqlite",
     connection: {
